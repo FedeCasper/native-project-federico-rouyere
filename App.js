@@ -1,12 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello Native World!</Text>
-      <Text style={styles.subtitle}>Federico Rouyere</Text>
-      <StatusBar style="auto" />
+      <View>
+        <TextInput placeholder="Add a task"/>
+        <Button title="Add"/>
+      </View>
+      <View>
+        <Text>Tarea 1</Text>
+        <Text>Tarea 2</Text>
+        <Text>Tarea 3</Text>
+        <Text>Tarea 4</Text>
+      </View>
     </View>
   );
 }
