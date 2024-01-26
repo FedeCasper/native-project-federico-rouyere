@@ -3,15 +3,27 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 const App = () => {
   return (
     <View style={styles.container}>
-      <View>
-        <TextInput placeholder="Add a task"/>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.input} placeholder="Add a task"/>
         <Button title="Add"/>
       </View>
-      <View>
-        <Text>Tarea 1</Text>
-        <Text>Tarea 2</Text>
-        <Text>Tarea 3</Text>
-        <Text>Tarea 4</Text>
+      <View style={styles.tasksContainer}>
+        <View>
+          <Text style={styles.text}>Tarea 1</Text>
+          <Button title="Delete"/>
+        </View>
+        <View>
+          <Text style={styles.text}>Tarea 2</Text>
+          <Button title="Delete"/>
+        </View>
+        <View>
+          <Text style={styles.text}>Tarea 3</Text>
+          <Button title="Delete"/>
+        </View>
+        <View>
+          <Text style={styles.text}>Tarea 4</Text>
+          <Button title="Delete"/>
+        </View>
       </View>
     </View>
   );
@@ -21,19 +33,30 @@ export default App
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#E5E5E5',
     flex: 1,
-    backgroundColor: '#8c8c8c',
+    paddingTop: 30,
+  },
+  inputContainer:{
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
-  title:{
-    color: '#4c007d',
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-    fontSize: 30
+  input:{
+    width: 250,
+    borderWidth: 2,
+    margin: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
-  subtitle:{
-    color: '#4c007d',
-    fontSize: 20
+  text:{
+    fontSize: 16,
+  },
+  tasksContainer:{
+    backgroundColor: 'blueviolet',
+    alignItems: 'center',
+    gap: 25,
+    padding: 10,
   }
+
 });
