@@ -1,33 +1,62 @@
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList, Modal } from 'react-native';
 import React, { useState } from 'react';
+import ModalDelteTask from './src/components/ModalDelteTask';
+import AddTask from './src/components/AddTask';
+import ListTasks from './src/components/ListTasks';
 
 
 const App = () => {
 
    const [modalVisible, setModalVisible] = useState(false)
-   const [newTask, setNewTask] = useState({
-      id: '',
-      title: '',
-      description: ''
-   })
+   const [taskSelected, setTaskSelected] = useState({})
+   const [taskTitle,  setTaskTitle] = useState('')
+   const [taskDescription,  setTaskDescription] = useState('')
    const [tasks, setTasks] = useState([])
-   const [selectedId, setSelectedId] = useState(null)
+
+
 
    const addTask = () => {
+      const newTask = { 
+         id: Math.floor(Math.random() * 1000).toString(), 
+         create_at: new Date().toLocaleString(
+            'es-ES', {
+               day: 'numeric',
+               month: 'numeric',
+               year: 'numeric',
+               hour12: false,
+               hour: 'numeric',
+               minute: 'numeric',
+            }
+         ),
+         update_at: new Date().toLocaleString(
+            'es-ES', {
+               day: 'numeric',
+               month: 'numeric',
+               year: 'numeric',
+               hour12: false,
+               hour: 'numeric',
+               minute: 'numeric',
+            }
+         ),
+         completed: false,
+         title: taskTitle, 
+         description: taskDescription
+      }
       setTasks([...tasks, newTask])
-      setNewTask({ title: '', description: '' }) // Reset the input
+      setTaskTitle('')
+      setTaskDescription('')
    }
 
-   const onHandlerTitleAndId = (title_) => {
-      setNewTask({ ...newTask, title: title_, id: Math.floor(Math.random() * 1000).toString() })
+   const onHandlerTitle = (title_) => {
+      setTaskTitle(title_)
    }
 
    const onHandlerDescription = (description_) => {
-      setNewTask({ ...newTask, description: description_ })
+      setTaskDescription(description_)
    }
 
-   const modalTrigger = (id) => {
-      setSelectedId(id)
+   const modalTrigger = (item) => {
+      setTaskSelected(item)
       setModalVisible(!modalVisible)
    }
 
@@ -36,53 +65,34 @@ const App = () => {
       setModalVisible(!modalVisible)
    }
 
+   const markAsComplete = (id) => {
+      setTasks( tasks.map( (task) => task.id === id ? { ...task, completed: !task.completed } : task ) )
+   }
+
    return (
       <View style={styles.container}>
-         <View style={styles.inputContainer}>
-            <TextInput
-               value={newTask.title}
-               onChangeText={onHandlerTitleAndId}
-               style={styles.input}
-               placeholder="Add a task title"
-               placeholderTextColor="white"
+
+         <AddTask
+            taskTitle={taskTitle}
+            taskDescription={taskDescription}
+            onHandlerTitle={onHandlerTitle}
+            onHandlerDescription={onHandlerDescription}
+            addTask={addTask}
+         />
+
+         <ListTasks
+            tasks={tasks}
+            modalTrigger={modalTrigger}
+            markAsComplete={markAsComplete}
+         />
+
+         <ModalDelteTask
+            modalVisible={modalVisible}
+            taskSelected={taskSelected}
+            deleteTask={deleteTask}
+            setModalVisible={setModalVisible}
             />
-            <TextInput
-               value={newTask.description}
-               onChangeText={onHandlerDescription}
-               style={styles.input}
-               placeholder="Add a task descriptiom"
-               placeholderTextColor="white"
-            />
-            <Button color="#36E0C6" title="Add" onPress={addTask} />
-         </View>
-         <View style={styles.tasksContainer}>
-            <FlatList
-               data={tasks}
-               keyExtractor={(item) => item.id}
-               renderItem={({ item }) => (
-                  <View key={item.id} style={styles.taskCard}>
-                     <Text style={styles.taskTitle}>{item.title}</Text>
-                     <Text style={styles.taskDescription}>{item.description}</Text>
-                     <Button
-                        color="#E06736"
-                        title='Delete'
-                        onPress={ () => modalTrigger(item.id) }
-                     />
-                  </View>
-               )}
-            />
-            <Modal
-               visible={modalVisible}
-               animationType="slide"
-               transparent
-            >
-               <View style={styles.modalContainer}>
-                  <Text style={styles.taskTitle}>Are you sure?!</Text>
-                  <Button color="#E06736" title="Yes" onPress={ () => deleteTask(selectedId) } />
-                  <Button color="#E06736" title="No" onPress={ () => setModalVisible(!modalVisible) } />
-               </View>
-            </Modal>
-         </View>
+            
       </View>
    );
 }
@@ -94,59 +104,5 @@ const styles = StyleSheet.create({
       backgroundColor: '#E5E5E5',
       flex: 1,
       paddingTop: 40,
-   },
-   inputContainer: {
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      backgroundColor: '#6B508B',
-      padding: 10,
-   },
-   input: {
-      width: 250,
-      borderBottomWidth: 2,
-      borderColor: 'gray',
-      margin: 10,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-   },
-   tasksContainer: {
-      padding: 10,
-      alignItems: 'center',
-      backgroundColor: '#fff0ff',
-      flex: 1
-   },
-   taskCard: {
-      backgroundColor: 'blueviolet',
-      padding: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 10,
-      marginBottom: 20,
-      gap: 10,
-      width: 350,
-   },
-   taskTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: "white",
-   },
-   taskDescription: {
-      fontSize: 16,
-      fontStyle: 'italic',
-      width: "70%",
-      color: "white",
-      textAlign: 'center',
-   },
-   modalContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'indigo',
-      padding: 20,
-      gap: 10
-   },
-
-
-
+   }
 });
