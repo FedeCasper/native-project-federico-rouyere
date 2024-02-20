@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "coder-project-native",
-    "slug": "coder-project-native",
+    "name": "moviesApp",
+    "slug": "moviesApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
