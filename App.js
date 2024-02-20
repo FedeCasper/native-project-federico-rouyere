@@ -22,7 +22,7 @@ const App = () => {
   if(!fontsLoaded) return null
 
   return (
-    <View>
+    <View style={styles.appContainer}>
       {
         categotySelected ?
           <MoviesByCategory categorySelected={categotySelected} />
@@ -35,4 +35,10 @@ const App = () => {
 
 export default App
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+   appContainer: {
+      flex: 1,
+      borderColor: 'red',
+      borderWidth: 3
+   }
+})
