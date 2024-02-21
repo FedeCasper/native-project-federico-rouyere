@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import MovieCard from '../components/MovieCard'
 
 
-const MoviesByCategory = ({ categorySelected }) => {
+const MoviesByCategory = ({ categorySelected, setMovieIdState }) => {
 
    const [filteredMovies, setFilteredMovies] = useState(movies)
    const [keyword, setKeyword] = useState('')
@@ -43,7 +43,7 @@ const MoviesByCategory = ({ categorySelected }) => {
         keyExtractor={( item ) => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-            <MovieCard item={item} />
+            <MovieCard item={item} setMovieIdState={setMovieIdState} />
         )}
       />
     </>

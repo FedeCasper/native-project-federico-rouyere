@@ -1,17 +1,24 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Home from './src/screens/Home'
-import MoviesByCategory from './src/screens/MoviesByCategory'
 import { useFonts } from 'expo-font'
 import { fontsCollection } from './src/utils/globals/fonts'
+import Home from './src/screens/Home'
+import MoviesByCategory from './src/screens/MoviesByCategory'
+import MovieDetail from './src/screens/MovieDetail'
+
 
 
 const App = () => {
 
   const [ categotySelected, setCategorySelected ] = useState("")
+  const [movieId, setMovieId] = useState(0)
 
   const setCategorySelectedState = (category) => {
     setCategorySelected(category)
+  }
+
+  const setMovieIdState = (id) => {
+    setMovieId(id)
   }
 
   useEffect(() => {
@@ -25,7 +32,10 @@ const App = () => {
     <View style={styles.appContainer}>
       {
         categotySelected ?
-          <MoviesByCategory categorySelected={categotySelected} />
+          movieId ?
+            <MovieDetail movieId={movieId} /> 
+            :
+            <MoviesByCategory categorySelected={categotySelected} setMovieIdState={setMovieIdState}  />
           :
           <Home setCategorySelectedState={setCategorySelectedState} />
       }
@@ -39,6 +49,6 @@ const styles = StyleSheet.create({
    appContainer: {
       flex: 1,
       borderColor: 'red',
-      borderWidth: 3
+      borderWidth: 3,
    }
 })

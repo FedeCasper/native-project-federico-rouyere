@@ -1,19 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import { Image } from 'react-native'
 import fonts  from '../utils/globals/fonts'
 
 
-const MovieCard = ({item}) => {
+const MovieCard = ({item, setMovieIdState}) => {
+
+  const { width } = useWindowDimensions();
 
   return (
-    <View style={styles.container}>
-        <Image source={{uri: item.cover}} style={styles.image} resizeMode="cover" />
-        <View style={styles.info}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.sinopsis}>{ item.sinopsis ? item.sinopsis.slice(0, 100) + "..." : "Synopsis not available"}</Text>
-          <Text style={styles.text}> - {item.year} -</Text>
+    <Pressable onPress={ () => {setMovieIdState(item.id)} } style={styles.container}>
+        <Image source={ { uri: item.cover } } style={ styles.image } resizeMode="cover" />
+        <View style={ styles.info }>
+          <Text style={ styles.title }>{ item.title }</Text>
+          <Text style={ [styles.sinopsis, width > 300 ? {fontSize: 10} : {fontSize: 8} ] }>{ item.sinopsis ? item.sinopsis.slice(0, 100) + "..." : "Synopsis not available"}</Text>
+          <Text style={ styles.text }> - { item.year } -</Text>
         </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -32,7 +34,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderBottomColor: '#c56cf0',
     borderBottomWidth: 3,
-    marginHorizontal: "10%"
+    marginHorizontal: "10%",
+    gap: 10
   },
   title: {
     color: 'white',
@@ -45,18 +48,23 @@ const styles = StyleSheet.create({
     fontSize: 10
   },
   image: {
-    width: 100,
+    minWidth: 100,
     height: "100%",
     borderRadius: 10,
   },
   info: {
     padding: 10,
-    
+    borderColor: "cyan",
+    borderWidth: 1,
+    flex: 1,
+    height: "100%",
   },
   sinopsis: {
+    width: "100%",
     fontSize: 12,
-    width: 175,
     color: "lightgray",
-    fontFamily: fonts.PoppinsItalic
+    fontFamily: fonts.PoppinsItalic,
+    borderColor: "yellow",
+    borderWidth: 1,
   }
 })
