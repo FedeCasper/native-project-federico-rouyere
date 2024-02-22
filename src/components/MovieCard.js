@@ -3,12 +3,12 @@ import { Image } from 'react-native'
 import fonts  from '../utils/globals/fonts'
 
 
-const MovieCard = ({item, setMovieIdState}) => {
+const MovieCard = ({item, navigation}) => {
 
   const { width } = useWindowDimensions();
 
   return (
-    <Pressable onPress={ () => {setMovieIdState(item.id)} } style={styles.container}>
+    <Pressable onPress={ () => navigation.navigate('MovieDetail', { movieId: item.id }) } style={styles.container}>
         <Image source={ { uri: item.cover } } style={ styles.image } resizeMode="cover" />
         <View style={ styles.info }>
           <Text style={ styles.title }>{ item.title }</Text>
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
-    borderColor: "cyan",
-    borderWidth: 1,
+    // borderColor: "cyan",
+    // borderWidth: 1,
     flex: 1,
     height: "100%",
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "lightgray",
     fontFamily: fonts.PoppinsItalic,
-    borderColor: "yellow",
-    borderWidth: 1,
+    // borderColor: "yellow",
+    // borderWidth: 1,
   }
 })

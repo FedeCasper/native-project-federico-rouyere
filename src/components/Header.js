@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
-const Header = ({ title }) => {
+const Header = ({ title, navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
         {
-            title !== 'Home' ? <AntDesign name="arrowleft" size={24} color="white" /> : null
+            title !== 'Home' ? 
+            <Pressable onPress={() => navigation.goBack()}>
+              <AntDesign name="arrowleft" size={24} color="white" /> 
+            </Pressable>
+            : 
+            null
         }
         <Text style={[styles.text , { marginRight: title === 'Home' ? 0 : "auto" } ]}>{title}</Text>
     </View>

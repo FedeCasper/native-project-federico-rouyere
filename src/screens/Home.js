@@ -1,32 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import Header from '../components/Header'
+import { StyleSheet } from 'react-native'
 import Categories from '../components/Categories';
 
 
-const Home = ({ setCategorySelectedState }) => {
+const Home = ({ navigation }) => {
    
   return (
     <>
-      <Header title="Home" />
-         <Text style={styles.text}>Choose a category</Text>
-         <View style={styles.categoriesContainer}>
-            <Categories setCategorySelectedState={setCategorySelectedState} />
-         </View>
+      <Categories navigation={navigation} />
     </>
   )
 }
 
 export default Home
 
-const styles = StyleSheet.create({
-  categoriesContainer: {
-    flex: 1,
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    margin: 10,
-    color: 'gray',
-    textAlign: 'center'
-  }
-})
+const styles = StyleSheet.create({})

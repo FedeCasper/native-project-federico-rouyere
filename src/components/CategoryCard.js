@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text } from 'react-native'
 import BaseShadow from './wrappers/BaseShadow'
 
-const CategoryCard = ( {item, setCategorySelectedState} ) => {
+const CategoryCard = ( {item, navigation} ) => {
   return (
-   <Pressable onPress={() => setCategorySelectedState(item)}>
+   <Pressable onPress={() => navigation.navigate('MoviesByCategory', {categorySelected: item})}>
       <BaseShadow style={styles.container}>
          <Text style={styles.text}>{item}</Text>
       </BaseShadow>
