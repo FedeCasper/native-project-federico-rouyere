@@ -1,24 +1,38 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
 import movies from '../utils/data/movies.json'
 import { useEffect, useState } from 'react'
 import { WebView } from 'react-native-webview';
 import { FontAwesome5 } from '@expo/vector-icons';
+import fonts  from '../utils/globals/fonts'
+import HorizontalFlatList from '../components/HorizontalFlatList';
 
 
 const MovieDetail = ({ navigation, route }) => {
 
   const { movieId } = route.params
-
   const [ selectedMovie, setSelectedMovie ] = useState({})
+  const [ moviesUniverse, setMoviesUniverse ] = useState([])
 
   const findMovieById = ( id ) => {
     const movie = movies.find( movie => movie.id === id )
     setSelectedMovie( movie )
   }
 
+  const getMovieUniverse = (selectedMovie) => {
+    if ( selectedMovie?.universe !== 'None' ){
+      const universe = movies.filter( movie => ( movie.universe === selectedMovie.universe ) && ( movie.id !== selectedMovie.id )  ) 
+      setMoviesUniverse( universe )
+    }
+  }
+
   useEffect(() => {
     findMovieById( movieId )
   }, [ movieId ])
+
+  useEffect(() => {
+    getMovieUniverse( selectedMovie )
+  }, [ selectedMovie ])
+
 
   return (
     <ScrollView>
@@ -55,6 +69,11 @@ const MovieDetail = ({ navigation, route }) => {
 
       </View>
 
+      {
+        moviesUniverse.length > 0 &&
+          <HorizontalFlatList arrayData={ moviesUniverse } sectionTitle={ "Movie Universe" }  />
+      }
+
     </ScrollView>
   )
 }
@@ -69,9 +88,9 @@ const styles = StyleSheet.create({
     minHeight: 80,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '600',
+    fontSize: 28,
     color: 'indigo',
+    fontFamily: fonts.PoppinsRegular
   },
   trailerContainer: {
     backgroundColor: 'black',
@@ -131,7 +150,7 @@ const styles = StyleSheet.create({
     color: 'lightgray'
   },
   optionalTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontStyle: 'italic',
     color: 'gray',
     padding: 5
@@ -147,12 +166,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: 'gray',
-    paddingRight: 10
+    paddingRight: 10,
+    lineHeight: 20
   },
   horizontalRule: {
     borderBottomColor: 'gray', 
     borderBottomWidth: 1,
     width: '90%', 
     marginVertical: 10, 
-  }
+  },
+
 })

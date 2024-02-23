@@ -54,8 +54,6 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
-    // borderColor: "cyan",
-    // borderWidth: 1,
     flex: 1,
     height: "100%",
   },
@@ -64,7 +62,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "lightgray",
     fontFamily: fonts.PoppinsItalic,
-    // borderColor: "yellow",
-    // borderWidth: 1,
   }
 })

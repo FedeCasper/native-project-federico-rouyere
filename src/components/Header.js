@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 const Header = ({ title, navigation }) => {
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light" />
         {
             title !== 'Home' ? 
             <Pressable onPress={() => navigation.goBack()}>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     gap: 20,
     height: 50,
     width: '100%',
-    backgroundColor: '#474747',
+    backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: '#8e22bb',
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'white',
+    color: 'indigo',
   }
 })

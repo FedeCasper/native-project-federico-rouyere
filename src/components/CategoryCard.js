@@ -1,12 +1,18 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import BaseShadow from './wrappers/BaseShadow'
+import fonts from '../utils/globals/fonts'
+import { FontAwesome5 } from '@expo/vector-icons'
+
 
 const CategoryCard = ( {item, navigation} ) => {
   return (
    <Pressable onPress={() => navigation.navigate('MoviesByCategory', {categorySelected: item})}>
-      <BaseShadow style={styles.container}>
-         <Text style={styles.text}>{item}</Text>
-      </BaseShadow>
+      {/* <BaseShadow style={styles.container}> */}
+          <View style={styles.card}>
+            <FontAwesome5 name="skull" size={18} color="lightgray" style={{marginBottom: 10}} />
+            <Text style={styles.text}>{item.toUpperCase().replaceAll('_', ' ') }</Text>
+          </View>
+      {/* </BaseShadow> */}
    </Pressable>
   )
 }
@@ -15,8 +21,9 @@ export default CategoryCard
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
-    backgroundColor: '#4b4b4b',
+    width: 150,
+    height: 150,
+    backgroundColor: 'indigo',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
@@ -26,8 +33,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     marginHorizontal: "10%"
   },
+  card: {
+    backgroundColor: 'indigo',
+    height: 160,
+    width: 125,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 2,
+    padding: 10,
+    borderRadius: 5,
+
+  },
   text: {
     color: 'white',
-    fontSize: 16
+    fontSize: 14,
+    fontFamily: fonts.PoppinsRegular,
+    textAlign: 'center'
   }
 })

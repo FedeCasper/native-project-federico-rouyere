@@ -4,13 +4,14 @@ import CategoryCard from './CategoryCard'
 
 const Categories = ({ navigation,  }) => {
 
-   const categoriesArray = [...new Set(movies.map( movie => movie.gender ))].filter( category => category );
+   const categoriesArray = [...new Set(movies.map( movie => movie.gender ))].filter( category => category ).sort();
 
   return (
    <FlatList
+      horizontal
       data={categoriesArray}
       keyExtractor={( item ) => item}
-      contentContainerStyle={styles.list}
+      // contentContainerStyle={styles.list}
       renderItem={({ item }) => (
          <CategoryCard item={item} navigation={navigation} />
       )}

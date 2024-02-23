@@ -8,7 +8,6 @@ import MovieCard from '../components/MovieCard'
 const MoviesByCategory = ({ navigation, route }) => {
 
    const { categorySelected } = route.params
-
    const [filteredMovies, setFilteredMovies] = useState(movies)
    const [keyword, setKeyword] = useState('')
 
