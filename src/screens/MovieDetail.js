@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, FlatList, Button } from 'react-native'
 import movies from '../utils/data/movies.json'
 import { useEffect, useState } from 'react'
-import { WebView } from 'react-native-webview';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { WebView } from 'react-native-webview'
+import { FontAwesome5 } from '@expo/vector-icons'
 import fonts  from '../utils/globals/fonts'
-import HorizontalFlatList from '../components/HorizontalFlatList';
+import HorizontalFlatList from '../components/HorizontalFlatList'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCartItem } from '../features/cart/cartSlice'
 
 
 const MovieDetail = ({ navigation, route }) => {
 
+  const dispatch = useDispatch()
   const { movieId } = route.params
   const [ selectedMovie, setSelectedMovie ] = useState({})
   const [ moviesUniverse, setMoviesUniverse ] = useState([])
@@ -45,6 +48,8 @@ const MovieDetail = ({ navigation, route }) => {
       <View style={ styles.trailerContainer }>
         <WebView source={{ uri: selectedMovie.trailer ? selectedMovie?.trailer : "" }} style={{ height: 250 }} />
       </View>
+
+      <Button title="Add to Cart" onPress={ () => dispatch( addCartItem( selectedMovie ) ) }/>
 
       <View style={ styles.infoContainer }>
 

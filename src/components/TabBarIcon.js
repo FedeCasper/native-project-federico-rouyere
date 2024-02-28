@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { Children } from 'react'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 const TabBarIcon = ({title, iconName, focused}) => {
