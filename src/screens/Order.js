@@ -7,7 +7,7 @@ const Order = () => {
     <FlatList
       data={orders}
       keyExtractor={(item) => item.id}
-      style={styles.list}
+      contentContainerStyle={styles.list}
       renderItem={({item}) => (
         <OrderItem order={item} />
       )}
@@ -20,8 +20,8 @@ export default Order
 const styles = StyleSheet.create({
   list: {
     width: '100%',
-    borderColor: 'indigo',
+    borderColor: 'red',
     borderWidth: 1,
-
+    alignItems: 'center'
   }
 })

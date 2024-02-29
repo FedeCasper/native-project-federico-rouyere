@@ -8,7 +8,7 @@ const Header = ({ title, navigation }) => {
         {
             title !== 'Home' ? 
             <Pressable onPress={() => navigation.goBack()}>
-              <AntDesign name="arrowleft" size={24} color="white" /> 
+              <AntDesign name="arrowleft" size={24} color="lightgray" /> 
             </Pressable>
             : 
             null
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     gap: 20,
     height: 50,
     width: '100%',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'indigo',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: '#8e22bb',
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'indigo',
+    color: 'lightgray',
   }
 })

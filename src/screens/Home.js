@@ -38,9 +38,9 @@ const Home = ({ navigation }) => {
           <Categories navigation={navigation} />
         </View>    
         <View style={styles.container}>
-          <HorizontalFlatList arrayData={recentAdded} sectionTitle="Recently Added" />
+          <HorizontalFlatList arrayData={ recentAdded } sectionTitle="Recently Added" />
         </View>
-        <HorizontalFlatList arrayData={topTenMovies} sectionTitle="Top 10 movies" />
+        <HorizontalFlatList arrayData={ topTenMovies } sectionTitle="Top 10 movies" />
       </ScrollView>
     </>
   )

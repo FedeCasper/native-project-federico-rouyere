@@ -14,6 +14,7 @@ const MovieCard = ({item, navigation}) => {
           <Text style={ styles.title }>{ item.title }</Text>
           <Text style={ [styles.sinopsis, width > 300 ? {fontSize: 10} : {fontSize: 8} ] }>{ item.sinopsis ? item.sinopsis.slice(0, 100) + "..." : "Synopsis not available"}</Text>
           <Text style={ styles.text }> - { item.year } -</Text>
+          <Text style={ styles.price }> ${ (item.price).toFixed(2) }</Text>
         </View>
     </Pressable>
   )
@@ -62,5 +63,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "lightgray",
     fontFamily: fonts.PoppinsItalic,
+  },
+  price: {
+    color: 'white',
+    fontSize: 14,
+    fontFamily: fonts.PoppinsBlack,
+    marginTop: 10,
+    marginBottom: 10,
+
   }
 })

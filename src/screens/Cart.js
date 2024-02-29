@@ -3,7 +3,7 @@ import CartItem from '../components/CartItem'
 import { useSelector } from 'react-redux'
 
 
-const Cart = () => {
+const Cart = ({ navigation }) => {
 
   const cart = useSelector( state => state.cart )
 
@@ -13,13 +13,14 @@ const Cart = () => {
         data={cart.items}
         keyExtractor={(item) => item.id}
         style={ styles.list }
+        contentContainerStyle={{ gap: 10 }}
         renderItem={({item}) => (
-          <CartItem item={item} />
+          <CartItem item={item} navigation={navigation} />
         )}
       />
       <View style={ styles.confirmContainer }>
-        <Text>Total: $20</Text>
-        <Pressable>
+        <Text style={ styles.total }>Total: ${cart.total.toFixed(2) }</Text>
+        <Pressable style={ styles.buttonConfirmContainer }>
           <Text style={ styles.buttonConfirm }>Confirm</Text>
         </Pressable>
       </View>
@@ -36,10 +37,21 @@ const styles = StyleSheet.create({
     gap: 10,
     backgroundColor: 'lightgray',
     alignItems: 'flex-start',
-
   },
   list: {
     width: '100%',
+  },
+  total: {
+    color: 'indigo',
+    backgroundColor: 'darkgray',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: 10,
+    elevation: 3,
+    borderRadius: 5,
+    fontWeight: 'bold',
   },
   confirmContainer: {
     gap: 10,
@@ -48,10 +60,15 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 10,
   },
-  buttonConfirm: {
+  buttonConfirmContainer: {
     padding: 10,
     backgroundColor: 'indigo',
     color: 'white',
-    borderRadius: 5
+    borderRadius: 5,
+    width: "100%",
+  },
+  buttonConfirm: {
+    color: 'white',
+    textAlign: 'center',
   }
 })

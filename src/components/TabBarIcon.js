@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
       width: "90%"
    },
    focused: {
-      borderBottomColor: 'orange',
-      borderBottomWidth: 1,
+      borderTopColor: 'orange',
+      borderTopWidth: 2,
    },
    text: {
       color: 'lightgray',

@@ -1,24 +1,32 @@
-import { StyleSheet, Text, View, Image, ScrollView, FlatList, Button } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, Button, Pressable } from 'react-native'
 import movies from '../utils/data/movies.json'
 import { useEffect, useState } from 'react'
 import { WebView } from 'react-native-webview'
 import { FontAwesome5 } from '@expo/vector-icons'
 import fonts  from '../utils/globals/fonts'
 import HorizontalFlatList from '../components/HorizontalFlatList'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addCartItem } from '../features/cart/cartSlice'
+import { useSelector } from 'react-redux'
+
 
 
 const MovieDetail = ({ navigation, route }) => {
 
+  const cart = useSelector( state => state.cart )
   const dispatch = useDispatch()
   const { movieId } = route.params
   const [ selectedMovie, setSelectedMovie ] = useState({})
   const [ moviesUniverse, setMoviesUniverse ] = useState([])
+  const [ inCart, setInCart ] = useState(false)
 
   const findMovieById = ( id ) => {
     const movie = movies.find( movie => movie.id === id )
     setSelectedMovie( movie )
+  }
+
+  const isInCart = ( id ) => {
+    setInCart( cart.items.some( item => item.id === id ) )
   }
 
   const getMovieUniverse = (selectedMovie) => {
@@ -36,6 +44,10 @@ const MovieDetail = ({ navigation, route }) => {
     getMovieUniverse( selectedMovie )
   }, [ selectedMovie ])
 
+  useEffect(() => {
+    isInCart( selectedMovie.id )
+  }, [ selectedMovie ] )
+
 
   return (
     <ScrollView>
@@ -49,7 +61,12 @@ const MovieDetail = ({ navigation, route }) => {
         <WebView source={{ uri: selectedMovie.trailer ? selectedMovie?.trailer : "" }} style={{ height: 250 }} />
       </View>
 
-      <Button title="Add to Cart" onPress={ () => dispatch( addCartItem( selectedMovie ) ) }/>
+      <Pressable 
+        style={ styles.cartButton }
+        onPress={ () => dispatch( addCartItem( selectedMovie ) ) 
+        }>
+        <Text style={ styles.buttonText }>{ inCart ? "Already in your cart" : "Add to cart" }</Text>
+      </Pressable>
 
       <View style={ styles.infoContainer }>
 
@@ -101,6 +118,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     paddingVertical: 40,
   },
+
+  cartButton: {
+    backgroundColor: 'indigo',
+    padding: 10,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: 'lightgray',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
   year: {
     fontSize: 14,
   },

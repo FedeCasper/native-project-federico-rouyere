@@ -4,11 +4,11 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 const OrderItem = ({order}) => {
   return (
     <View style={styles.card}>
-      <View style={styles.textInfo}>
-        <Text>{new Date( order.createAt ).toLocaleDateString()}</Text>
-        <Text>${order.total}</Text>
+      <View>
+        <Text style={ styles.text }>{new Date( order.createAt ).toLocaleDateString()}</Text>
+        <Text style={ styles.text }>${order.total}</Text>
       </View>
-      <FontAwesome5 name="search" size={20} color="lightgray" />
+      <FontAwesome5 name="search" size={20} color="lightgray" style={ styles.icon } />
     </View>
   )
 }
@@ -24,10 +24,14 @@ const styles = StyleSheet.create({
      borderRadius: 5,
      width: '90%',
      alignItems: 'center',
+     justifyContent: 'space-between',
      padding: 10,
      gap: 10
   },
-  textInfo: {
-     color: 'white',
+  text: {
+    color: 'white',
+  },
+  icon: {
+    marginRight: 10
   }
 })
