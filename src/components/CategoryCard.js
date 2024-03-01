@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import BaseShadow from './wrappers/BaseShadow'
 import fonts from '../utils/globals/fonts'
 import { FontAwesome5 } from '@expo/vector-icons'
 

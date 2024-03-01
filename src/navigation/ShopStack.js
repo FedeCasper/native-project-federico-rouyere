@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Home from '../screens/Home'
 import MoviesByCategory from '../screens/MoviesByCategory'
 import MovieDetail from '../screens/MovieDetail'

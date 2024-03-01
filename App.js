@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useFonts } from 'expo-font'
 import { fontsCollection } from './src/utils/globals/fonts'
 import MainNavigator from './src/navigation/MainNavigator'

@@ -14,7 +14,6 @@ const Order = () => {
     />
 )}
 
-
 export default Order
 
 const styles = StyleSheet.create({
