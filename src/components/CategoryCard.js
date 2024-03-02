@@ -1,15 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import fonts from '../utils/globals/fonts'
-import { FontAwesome5 } from '@expo/vector-icons'
 
 
 const CategoryCard = ( {item, navigation} ) => {
   return (
-   <Pressable onPress={() => navigation.navigate('MoviesByCategory', {categorySelected: item})}>
-          <View style={styles.card}>
-            <FontAwesome5 name="skull" size={18} color="lightgray" style={{marginBottom: 10}} />
-            <Text style={styles.text}>{item.toUpperCase().replaceAll('_', ' ') }</Text>
-          </View>
+   <Pressable onPress={ () => navigation.navigate( 'Category', { categorySelected: item } ) }>
+      <View style={styles.card}>
+        <Text style={styles.text}>{item.toUpperCase().replaceAll('_', ' ') }</Text>
+      </View>
    </Pressable>
   )
 }
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'indigo',
-    height: 160,
+    height: 60,
     width: 125,
     justifyContent: 'center',
     alignItems: 'center',

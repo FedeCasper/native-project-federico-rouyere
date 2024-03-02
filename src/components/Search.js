@@ -4,19 +4,20 @@ import { useState } from 'react'
 
 const Search = ({ handleKeyword }) => {
 
-   const [input, setInput] = useState('')
-   const [error, setError] = useState('')
+   const [ input, setInput ] = useState('')
+   const [ error, setError ] = useState( false )
 
    const handleInput = (t) => setInput(t)
+   
 
    const handleSearch = () => {
       const expresionRegular = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
       if(expresionRegular.test(input)){
-         setError("No se puede ingresar caracteres especiales")
+         setError( true )
          return
       }
       console.log("Bucando...");
-      setError('')
+      setError( false )
       handleKeyword(input)
       Keyboard.dismiss()
    }
@@ -25,12 +26,12 @@ const Search = ({ handleKeyword }) => {
       console.log("Limpiando...");
       setInput('')
       handleKeyword('')
-      setError('')
+      setError( false )
    }
 
    return (
-      <View style={styles.container} >
-         <View style={styles.inputContainer}>
+      <View style={ styles.container } >
+         <View style={ styles.inputContainer }>
             <TextInput
                placeholder='Search...'
                value={ input } 
@@ -46,8 +47,8 @@ const Search = ({ handleKeyword }) => {
          </View>
          {
             error &&
-            <View style={styles.error}>
-               <Text style={{ color: 'white' }}>{ error }</Text> 
+            <View style={ styles.errorContainer }>
+               <Text style={ { color: 'white' } }>No se puede ingresar caracteres especiales</Text> 
             </View>
          }
       </View>
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
    },
-   error: {
+   errorContainer: {
       backgroundColor: 'red',
       padding: 5,
       justifyContent: 'center',

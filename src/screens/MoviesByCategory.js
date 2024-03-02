@@ -1,52 +1,58 @@
-import { FlatList, StyleSheet } from 'react-native'
-import movies from '../utils/data/movies.json'
-import Search from '../components/Search'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { useEffect, useState } from 'react'
+import Search from '../components/Search'
 import MovieCard from '../components/MovieCard'
+import { useGetMoviesByCategoryQuery } from '../app/services/shop'
 
 
 const MoviesByCategory = ({ navigation, route }) => {
 
    const { categorySelected } = route.params
-   const [filteredMovies, setFilteredMovies] = useState(movies)
-   const [keyword, setKeyword] = useState('')
+   
+   const { data: movies } = useGetMoviesByCategoryQuery( categorySelected )
 
-   const categoryFilter = ( categorySelected ) => {
-      if( categorySelected ){
-         setFilteredMovies( movies.filter( movie => movie.gender === categorySelected ) )
-      }
-      if(keyword){
-         setFilteredMovies( filteredMovies.filter( movie => {
+   const [ filteredMovies, setFilteredMovies ] = useState( [] )
+   const [ keyword, setKeyword ] = useState('')
+
+
+   const categoryFilter = ( ) => {
+      setFilteredMovies( movies )
+      if( keyword ){
+         setFilteredMovies( movies.filter( movie => {
             const title = movie.title.toLowerCase()
             const searchWord = keyword.toLowerCase()
-            return title.includes(searchWord)
+            return title.includes( searchWord )
          } ) )
       }
    }
 
-   const handleKeyword = (keyWord) => {
+   const handleKeyword = ( keyWord ) => {
       setKeyword( keyWord )
    }
 
    useEffect(() => {
-      categoryFilter(categorySelected)
-   }, [categorySelected, keyword])
+      categoryFilter( )
+   }, [ categorySelected, keyword, movies ])
+
 
   return (
-    <>
+    <View style={ styles.container }>
       <Search handleKeyword={ handleKeyword } />
       <FlatList
-        data={ filteredMovies }
-        keyExtractor={ ( item ) => item.id }
-        contentContainerStyle={ styles.list }
-        renderItem={({ item }) => (
+         data={ filteredMovies }
+         keyExtractor={ ( item ) => item.id }
+         renderItem={({ item }) => (
             <MovieCard item={ item } navigation={ navigation } />
-        )}
+         )}
       />
-    </>
+    </View>
   )
 }
 
 export default MoviesByCategory
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+   }
+})

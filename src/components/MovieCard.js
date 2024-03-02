@@ -8,7 +8,10 @@ const MovieCard = ({item, navigation}) => {
   const { width } = useWindowDimensions();
 
   return (
-    <Pressable onPress={ () => navigation.navigate('MovieDetail', { movieId: item.id }) } style={styles.container}>
+    <Pressable 
+      onPress={ () => navigation.navigate( 'Movie Details', { movieId: item.id } ) } 
+      style={styles.container}
+      >
         <Image source={ { uri: item.cover } } style={ styles.image } resizeMode="cover" />
         <View style={ styles.info }>
           <Text style={ styles.title }>{ item.title }</Text>

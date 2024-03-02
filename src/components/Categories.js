@@ -1,18 +1,25 @@
-import { StyleSheet, FlatList } from 'react-native'
-import movies from '../utils/data/movies.json'
+import { StyleSheet, FlatList, Text } from 'react-native'
 import CategoryCard from './CategoryCard'
+import { useGetMoviesCategoriesQuery } from '../app/services/shop'
 
-const Categories = ({ navigation,  }) => {
+const Categories = ({ navigation }) => {
 
-   const categoriesArray = [...new Set(movies.map( movie => movie.gender ))].filter( category => category ).sort();
+   const { data: categories, isLoading } = useGetMoviesCategoriesQuery();
+
+   if ( isLoading ){
+      return <Text>Loading...</Text>
+    }
+
 
   return (
    <FlatList
       horizontal
-      data={categoriesArray}
+      data={ categories }
       keyExtractor={( item ) => item}
+      style={ styles.list }
+      showsHorizontalScrollIndicator={ false }
       renderItem={({ item }) => (
-         <CategoryCard item={item} navigation={navigation} />
+         <CategoryCard item={ item } navigation={ navigation } />
       )}
    />
   )
@@ -22,7 +29,7 @@ export default Categories
 
 const styles = StyleSheet.create({
    list: {
-      justifyContent: 'center',
-      marginVertical: 20
+      paddingHorizontal: 20,
+      paddingVertical: 10,
    }
 })

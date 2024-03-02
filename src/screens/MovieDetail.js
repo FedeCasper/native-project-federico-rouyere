@@ -1,60 +1,45 @@
-import { StyleSheet, Text, View, Image, ScrollView, Button, Pressable } from 'react-native'
-import movies from '../utils/data/movies.json'
+import { StyleSheet, Text, View, Image, ScrollView, Pressable } from 'react-native'
 import { useEffect, useState } from 'react'
 import { WebView } from 'react-native-webview'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCartItem } from '../features/cart/cartSlice'
+import { useGetMovieByIdQuery, useGetMovieUniverseQuery } from '../app/services/shop'
 import fonts  from '../utils/globals/fonts'
 import HorizontalFlatList from '../components/HorizontalFlatList'
-import { useDispatch } from 'react-redux'
-import { addCartItem } from '../features/cart/cartSlice'
-import { useSelector } from 'react-redux'
-
 
 
 const MovieDetail = ({ navigation, route }) => {
 
   const cart = useSelector( state => state.cart )
-  const dispatch = useDispatch()
-  const { movieId } = route.params
-  const [ selectedMovie, setSelectedMovie ] = useState({})
-  const [ moviesUniverse, setMoviesUniverse ] = useState([])
-  const [ inCart, setInCart ] = useState(false)
 
-  const findMovieById = ( id ) => {
-    const movie = movies.find( movie => movie.id === id )
-    setSelectedMovie( movie )
-  }
+  const dispatch = useDispatch()
+
+  const { movieId } = route.params
+
+  const { data: selectedMovie, isLoading } = useGetMovieByIdQuery( movieId )
+  const { data: movieUniverse } = useGetMovieUniverseQuery( selectedMovie?.universe )
+  const [ inCart, setInCart ] = useState( false )
+
 
   const isInCart = ( id ) => {
     setInCart( cart.items.some( item => item.id === id ) )
   }
 
-  const getMovieUniverse = (selectedMovie) => {
-    if ( selectedMovie?.universe !== 'None' ){
-      const universe = movies.filter( movie => ( movie.universe === selectedMovie.universe ) && ( movie.id !== selectedMovie.id )  ) 
-      setMoviesUniverse( universe )
-    }
-  }
-
   useEffect(() => {
-    findMovieById( movieId )
-  }, [ movieId ])
-
-  useEffect(() => {
-    getMovieUniverse( selectedMovie )
-  }, [ selectedMovie ])
-
-  useEffect(() => {
-    isInCart( selectedMovie.id )
+    isInCart( selectedMovie?.id )
   }, [ selectedMovie ] )
 
+  if ( isLoading ){
+    return <Text>Loading...</Text>
+  }
 
   return (
     <ScrollView>
 
       <View style={ styles.header }>
-        <Text style={ styles.title }>{ selectedMovie.title }</Text>
-        <Text style={ styles.year }>- { selectedMovie.year } -</Text>
+        <Text style={ styles.title }>{ selectedMovie?.title }</Text>
+        <Text style={ styles.year }>- { selectedMovie?.year } -</Text>
       </View>
 
       <View style={ styles.trailerContainer }>
@@ -71,7 +56,7 @@ const MovieDetail = ({ navigation, route }) => {
       <View style={ styles.infoContainer }>
 
         <View style={ styles.coverContainer }>
-          <Image source={{uri: selectedMovie.cover}} style={ styles.cover } />
+          <Image source={{uri: selectedMovie?.cover}} style={ styles.cover } />
           <View style={ styles.ratingContainer }>
             <FontAwesome5 name="star-half-alt" size={24} color="orange" />
             <Text style={ styles.rating }>{ selectedMovie.web_calification } pts.</Text>
@@ -79,11 +64,11 @@ const MovieDetail = ({ navigation, route }) => {
         </View>
 
         <View style={ styles.info }>
-          <Text style={ styles.gender }>{ selectedMovie.gender }</Text>
-          <Text style={ styles.sinopsis }>{ selectedMovie.sinopsis }</Text>
+          <Text style={ styles.gender }>{ selectedMovie?.gender }</Text>
+          <Text style={ styles.sinopsis }>{ selectedMovie?.sinopsis }</Text>
           <View style={ styles.optionalTitleContainer }>
             <Text style={ styles.optionalTitleHeader }>Also known as...</Text>
-            <Text style={ styles.optionalTitle }> { selectedMovie.optional_title }</Text>
+            <Text style={ styles.optionalTitle }> { selectedMovie?.optional_title }</Text>
           </View>
           <View style={ styles.horizontalRule } />
           <Text style={ styles.text }>Director: { selectedMovie.director ? selectedMovie.director : "Unknown director" }</Text>
@@ -92,8 +77,8 @@ const MovieDetail = ({ navigation, route }) => {
       </View>
 
       {
-        moviesUniverse.length > 0 &&
-          <HorizontalFlatList arrayData={ moviesUniverse } sectionTitle={ "Movie Universe" }  />
+        selectedMovie.universe &&
+          <HorizontalFlatList arrayData={ movieUniverse } sectionTitle={ "Movie Universe" }  />
       }
 
     </ScrollView>

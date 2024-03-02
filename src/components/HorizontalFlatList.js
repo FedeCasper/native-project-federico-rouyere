@@ -8,7 +8,7 @@ const HorizontalFlatList = ({ arrayData, sectionTitle }) => {
          <Text style={ styles.title }>
             <Text style={ styles.initialSign }>| </Text>
             { sectionTitle }
-            </Text>
+         </Text>
          <FlatList
             horizontal
             data={ arrayData }

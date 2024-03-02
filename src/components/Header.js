@@ -1,19 +1,23 @@
 import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
+import fonts from '../utils/globals/fonts'
+
 
 const Header = ({ title, navigation }) => {
+
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light" />
         {
-            title !== 'Home' ? 
+            title !== 'ScaryApp' ? 
             <Pressable onPress={() => navigation.goBack()}>
               <AntDesign name="arrowleft" size={24} color="lightgray" /> 
             </Pressable>
             : 
             null
         }
-        <Text style={[styles.text , { marginRight: title === 'Home' ? 0 : "auto" } ]}>{title}</Text>
+        <Text style={[styles.text , { marginRight: title === 'ScaryApp' ? 0 : "auto" } ]}>{title}</Text>
     </View>
   )
 }
@@ -35,6 +39,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    fontFamily: fonts.PoppinsRegular,
     color: 'lightgray',
   }
 })

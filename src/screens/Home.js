@@ -7,7 +7,6 @@ import fonts from '../utils/globals/fonts';
 
 
 
-
 const Home = ({ navigation }) => {
 
   const [ topTenMovies, setTopTenMovies ] = useState([])
@@ -33,7 +32,6 @@ const Home = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Categories</Text>
-        <Text style={styles.subtitle}>Choose a category to see all the stories</Text>
         <Categories navigation={navigation} />
       </View>    
       <View style={styles.container}>
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     color: 'indigo',
     fontFamily: fonts.PoppinsRegular,
     paddingLeft: 20,

@@ -10,16 +10,16 @@ const Stack = createNativeStackNavigator()
 const MainNavigator = () => {
   return (
       <Stack.Navigator
-         initialRouteName='Home'
+         initialRouteName='ScaryApp'
          screenOptions={({route, navigation}) => {
             return {
                header: () => <Header route={route} title={route.name} navigation={navigation} />
             }
          }}
       >
-         <Stack.Screen name="Home" component={Home}  />
-         <Stack.Screen name="MoviesByCategory" component={MoviesByCategory} />
-         <Stack.Screen name="MovieDetail" component={MovieDetail} />
+         <Stack.Screen name="ScaryApp" component={Home}  />
+         <Stack.Screen name="Category" component={MoviesByCategory} />
+         <Stack.Screen name="Movie Details" component={MovieDetail} />
       </Stack.Navigator>
   )
 }
