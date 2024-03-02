@@ -30,19 +30,17 @@ const Home = ({ navigation }) => {
   }, [])
 
   return (
-    <>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Categories</Text>
-          <Text style={styles.subtitle}>Choose a category to see all the stories</Text>
-          <Categories navigation={navigation} />
-        </View>    
-        <View style={styles.container}>
-          <HorizontalFlatList arrayData={ recentAdded } sectionTitle="Recently Added" />
-        </View>
-        <HorizontalFlatList arrayData={ topTenMovies } sectionTitle="Top 10 movies" />
-      </ScrollView>
-    </>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>Categories</Text>
+        <Text style={styles.subtitle}>Choose a category to see all the stories</Text>
+        <Categories navigation={navigation} />
+      </View>    
+      <View style={styles.container}>
+        <HorizontalFlatList arrayData={ recentAdded } sectionTitle="Recently Added" />
+      </View>
+      <HorizontalFlatList arrayData={ topTenMovies } sectionTitle="Top 10 movies" />
+    </ScrollView>
   )
 }
 

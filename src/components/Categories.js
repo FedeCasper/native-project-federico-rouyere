@@ -11,7 +11,6 @@ const Categories = ({ navigation,  }) => {
       horizontal
       data={categoriesArray}
       keyExtractor={( item ) => item}
-      // contentContainerStyle={styles.list}
       renderItem={({ item }) => (
          <CategoryCard item={item} navigation={navigation} />
       )}

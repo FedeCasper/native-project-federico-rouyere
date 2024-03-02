@@ -14,7 +14,6 @@ const ListTasks = ({ tasks, modalTrigger, markAsComplete }) => {
                   modalTrigger={modalTrigger}
                   markAsComplete={markAsComplete}
                   />
-               
             )}
          />
       </View>

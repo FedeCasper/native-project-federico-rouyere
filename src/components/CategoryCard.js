@@ -6,12 +6,10 @@ import { FontAwesome5 } from '@expo/vector-icons'
 const CategoryCard = ( {item, navigation} ) => {
   return (
    <Pressable onPress={() => navigation.navigate('MoviesByCategory', {categorySelected: item})}>
-      {/* <BaseShadow style={styles.container}> */}
           <View style={styles.card}>
             <FontAwesome5 name="skull" size={18} color="lightgray" style={{marginBottom: 10}} />
             <Text style={styles.text}>{item.toUpperCase().replaceAll('_', ' ') }</Text>
           </View>
-      {/* </BaseShadow> */}
    </Pressable>
   )
 }
