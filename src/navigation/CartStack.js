@@ -9,9 +9,9 @@ const CartStack = () => {
   return (
     <Stack.Navigator
       initialRouteName='Cart'
-      screenOptions={ ({route, navigation}) => {
+      screenOptions={ ( { route, navigation } ) => {
          return {
-            header: () => <Header route={route} title={route.name} navigation={navigation} />
+            header: () => <Header route={ route } title={ route.name } navigation={ navigation } />
          }
       }}>
       <Stack.Screen name="Cart" component={ Cart } />

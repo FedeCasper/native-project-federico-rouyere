@@ -5,7 +5,6 @@ import fonts from '../utils/globals/fonts'
 
 const Header = ({ title, navigation }) => {
 
-
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light" />

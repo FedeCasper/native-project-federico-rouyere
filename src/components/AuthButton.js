@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 
-const ButtonPrimary = ({title, onPress}) => {
+const AuthButton = ({title, onPress}) => {
    return (
       <Pressable style={styles.button} onPress={onPress}>
          <Text style={styles.buttonText}>{title}</Text>
@@ -8,16 +8,17 @@ const ButtonPrimary = ({title, onPress}) => {
    )
 }
 
-export default ButtonPrimary
+export default AuthButton
 
 const styles = StyleSheet.create({
    button: {
-      backgroundColor: '#36E0C6',
+      backgroundColor: 'lightgray',
       padding: 10,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 10,
-      width: "100%",
+      width: "80%",
+      marginTop: 20
    },
    buttonText: {
       color: 'indigo',

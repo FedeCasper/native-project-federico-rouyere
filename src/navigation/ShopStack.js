@@ -25,5 +25,3 @@ const MainNavigator = () => {
 }
 
 export default MainNavigator
-
-const styles = StyleSheet.create({})
