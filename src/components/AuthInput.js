@@ -1,31 +1,42 @@
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, Text, View } from 'react-native'
 import fonts from '../utils/globals/fonts'
 
-const AuthInput = ({ action, value, placeholder, keyboardType, otherProps }) => {
+const AuthInput = ({ action, value, placeholder, keyboardType, otherProps, error }) => {
   return (
-   <TextInput 
-      onChangeText={ action } 
-      value={ value } 
-      placeholder={ placeholder }
-      keyboardType={ keyboardType }
-      autoCapitalize="none"
-      placeholderTextColor={'gray'}
-      {...otherProps}
-      style={styles.input} 
-   />
+   <View style={styles.container}>
+      <TextInput 
+         onChangeText={ action } 
+         value={ value } 
+         placeholder={ placeholder }
+         keyboardType={ keyboardType }
+         autoCapitalize="none"
+         placeholderTextColor={'gray'}
+         {...otherProps}
+         style={styles.input} 
+         />
+         { error ? <View><Text style={styles.error}>{error}</Text></View> : null }
+   </View>
   )
 }
 
 export default AuthInput
 
 const styles = StyleSheet.create({
+   container: {
+      width: '80%',
+   },
    input: {
       borderBottomColor: 'darkviolet',
       borderBottomWidth: 1,
-      width: '80%',
       color: 'lightgray',
       fontSize: 18,
       fontFamily: fonts.PoppinsRegular,
       paddingVertical: 5
+   }, 
+   error: {
+      color: 'red',
+      fontSize: 12,
+      fontStyle: 'italic',
+      marginTop: 5
    }
 })

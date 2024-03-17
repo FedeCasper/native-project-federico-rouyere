@@ -22,14 +22,16 @@ const Register = ({ navigation }) => {
           action={ (t) => setEmail(t) } 
           value={ email } 
           placeholder="Email" 
-          keyboardType={ 'email-address' } 
+          keyboardType={ 'email-address' }
+          error=""
         />
         <AuthInput 
           action={ (t) => setPassword(t) } 
           value={ password } 
           placeholder="Password" 
           keyboardType={ 'default' } 
-          otherProps={{ secureTextEntry: true }} 
+          otherProps={{ secureTextEntry: true }}
+          error="" 
           />
         <AuthInput 
           action={ (t) => setConfirmPassword(t) } 
@@ -37,6 +39,7 @@ const Register = ({ navigation }) => {
           placeholder="Confirm Password" 
           keyboardType={ 'default' } 
           otherProps={{ secureTextEntry: true }} 
+          error=""
           />
         <ButtonPrimary title="Register" onPress={ onSubmit } />
         <View style={ styles.textContainer }>

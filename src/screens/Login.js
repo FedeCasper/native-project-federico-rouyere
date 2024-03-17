@@ -22,6 +22,7 @@ const Login = ({ navigation }) => {
           value={ email } 
           placeholder="Email" 
           keyboardType={ 'email-address' } 
+          error=""
         />
         <AuthInput 
           action={ (t) => setPassword(t) } 
@@ -29,6 +30,7 @@ const Login = ({ navigation }) => {
           placeholder="Password" 
           keyboardType={ 'default' } 
           otherProps={{ secureTextEntry: true }} 
+          error=""
           />
         <ButtonPrimary title="Login" onPress={ onSubmit } />
         <View style={ styles.textContainer }>
