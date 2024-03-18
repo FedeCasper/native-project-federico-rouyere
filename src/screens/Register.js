@@ -3,20 +3,27 @@ import React, { useState } from 'react'
 import AuthInput from '../components/AuthInput'
 import ButtonPrimary from '../components/AuthButton'
 import fonts from '../utils/globals/fonts'
+import { useRegisterMutation } from '../app/services/auth'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../features/auth/authSlice'
+
 
 
 const Register = ({ navigation }) => {
 
+  const dispatch = useDispatch()
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ confirmPassword, setConfirmPassword ] = useState('')
+  const [ triggerRegister ] = useRegisterMutation()
 
-  const onSubmit = () => {
-    console.log( email, password );
+  const onSubmit = async () => {
+    const { data } = await triggerRegister( { email, password } )
+    dispatch( setUser( { email: data.email, idToken: data.idToken } ) )
   }
 
   return (
-    <View style={styles.container}>
+    <View style={ styles.container }>
       <Text style={ styles.title }>Register now!</Text>
         <AuthInput 
           action={ (t) => setEmail(t) } 
@@ -30,7 +37,7 @@ const Register = ({ navigation }) => {
           value={ password } 
           placeholder="Password" 
           keyboardType={ 'default' } 
-          otherProps={{ secureTextEntry: true }}
+          otherProps={ { secureTextEntry: true } }
           error="" 
           />
         <AuthInput 
@@ -38,7 +45,7 @@ const Register = ({ navigation }) => {
           value={ confirmPassword } 
           placeholder="Confirm Password" 
           keyboardType={ 'default' } 
-          otherProps={{ secureTextEntry: true }} 
+          otherProps={ { secureTextEntry: true } } 
           error=""
           />
         <ButtonPrimary title="Register" onPress={ onSubmit } />

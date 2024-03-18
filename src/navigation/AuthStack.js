@@ -5,7 +5,7 @@ import Header from '../components/Header'
 
 const Stack = createNativeStackNavigator()
 
-const AuthStack = () => {
+const AuthStack = ( ) => {
 
   return (
    <Stack.Navigator

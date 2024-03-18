@@ -1,25 +1,27 @@
-import { StyleSheet } from 'react-native'
-import { useState } from 'react'
 import TabNavigator from './TabNavigator'
 import AuthStack from './AuthStack'
 import { NavigationContainer } from '@react-navigation/native' 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 
 const MainNavigator = () => {
 
+  const user = useSelector( state => state.auth )
 
-  const [ idToken, setIdToken ] = useState( "" )
+   console.log( "Este es el user token", user );
+
+  useEffect(() => {
+      console.log( "Este es el user token", user.idToken )
+  }, [ user ])
 
   return (
    <NavigationContainer>
       {
-         idToken ? <TabNavigator /> : <AuthStack />
+         user.idToken ? <TabNavigator /> : <AuthStack />
       }
    </NavigationContainer>
   )
 }
 
 export default MainNavigator
-
-const styles = StyleSheet.create({})

@@ -1,20 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const authApi = createApi({
-   reducerPath: 'auth',
-   baseQuery: fetchBaseQuery( { baseUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=[API_KEY]' } ),
+   reducerPath: 'authApi',
+   baseQuery: fetchBaseQuery( { baseUrl: 'https://identitytoolkit.googleapis.com/v1/' } ),
 
    endpoints: ( builder ) => ({
 
- 
+      register: builder.mutation({
+         query: ( user ) => ({
+            url: 'accounts:signUp?key=AIzaSyBO5rHFVUL0LgvBTnv9yMQchJR6GzTtW_M',
+            method: 'POST',
+            body: user
+         })
+      })
 
    })
 
 })
 
 export const { 
-   useGetMoviesByCategoryQuery, 
-   useGetMovieByIdQuery, 
-   useGetMovieUniverseQuery, 
-   useGetMoviesCategoriesQuery 
-} = shopApi
+   useRegisterMutation
+} = authApi
