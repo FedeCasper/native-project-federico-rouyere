@@ -3,16 +3,23 @@ import React, { useState } from 'react'
 import AuthInput from '../components/AuthInput'
 import ButtonPrimary from '../components/AuthButton'
 import fonts from '../utils/globals/fonts'
+import { useLoginMutation } from '../app/services/auth'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../features/auth/authSlice'
 
 
 const Login = ({ navigation }) => {
 
+  const dispatch = useDispatch()
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ triggerLogin ] = useLoginMutation()
 
-  const onSubmit = () => {
-    console.log( email, password );
+  const onSubmit = async () => {
+    const { data } = await triggerLogin( { email, password } )
+    dispatch( setUser( { email: data.email, idToken: data.idToken } ) )
   }
+
 
   return (
     <View style={styles.container}>

@@ -11,10 +11,6 @@ const MainNavigator = () => {
 
    console.log( "Este es el user token", user );
 
-  useEffect(() => {
-      console.log( "Este es el user token", user.idToken )
-  }, [ user ])
-
   return (
    <NavigationContainer>
       {
