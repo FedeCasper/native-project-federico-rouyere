@@ -6,6 +6,7 @@ import fonts from '../utils/globals/fonts'
 import { useLoginMutation } from '../app/services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
+import { loginSchema } from '../utils/validations/authSchema'
 
 
 const Login = ({ navigation }) => {
@@ -13,11 +14,31 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch()
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ errorMailMsg, setErrorMailMsg ] = useState('')
+  const [ errorPasswordMsge, setErrorPasswordMsge ] = useState('')
   const [ triggerLogin ] = useLoginMutation()
 
+
   const onSubmit = async () => {
-    const { data } = await triggerLogin( { email, password } )
-    dispatch( setUser( { email: data.email, idToken: data.idToken } ) )
+    console.log("dentro de login");
+    try{
+      loginSchema.validateSync( { email, password } )
+      const { data } = await triggerLogin( { email, password } )
+      dispatch( setUser( { email: data.email, idToken: data.idToken, localId: data.localId } ) )
+    } catch (error) {
+      setErrorMailMsg( '' )
+      setErrorPasswordMsge( '' )
+      switch (error.path) {
+        case 'email':
+          setErrorMailMsg( error.message )
+          break
+        case 'password':
+          setErrorPasswordMsge( error.message )
+          break
+        default:
+          break
+      }
+    }
   }
 
 
@@ -29,7 +50,7 @@ const Login = ({ navigation }) => {
           value={ email } 
           placeholder="Email" 
           keyboardType={ 'email-address' } 
-          error=""
+          error={ errorMailMsg }
         />
         <AuthInput 
           action={ (t) => setPassword(t) } 
@@ -37,7 +58,7 @@ const Login = ({ navigation }) => {
           placeholder="Password" 
           keyboardType={ 'default' } 
           otherProps={{ secureTextEntry: true }} 
-          error=""
+          error={ errorPasswordMsge }
           />
         <ButtonPrimary title="Login" onPress={ onSubmit } />
         <View style={ styles.textContainer }>

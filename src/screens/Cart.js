@@ -1,11 +1,26 @@
 import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native'
 import CartItem from '../components/CartItem'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { usePostOrderMutation } from '../app/services/orders'
+import { deleteCart } from '../features/cart/cartSlice'
 
 
 const Cart = ({ navigation }) => {
 
+  const dispatch = useDispatch()
   const cart = useSelector( state => state.cart )
+  const localId = useSelector( state => state.auth.localId )
+  const [ triggerAddOrder ] = usePostOrderMutation()
+
+  console.log( 'localId', localId );
+
+  const handlerAddOrder = async () => {
+    const createdAt = new Date().toLocaleString()
+    const order = { createdAt, ...cart }
+    await triggerAddOrder(  {localId, order}  )
+    dispatch( deleteCart() )
+    navigation.navigate( 'OrdersStack' )
+  }
 
   return (
     <View style={ styles.container }>
@@ -20,7 +35,7 @@ const Cart = ({ navigation }) => {
       />
       <View style={ styles.confirmContainer }>
         <Text style={ styles.total }>Total: ${cart.total.toFixed(2) }</Text>
-        <Pressable style={ styles.buttonConfirmContainer }>
+        <Pressable style={ styles.buttonConfirmContainer } onPress={ handlerAddOrder }>
           <Text style={ styles.buttonConfirm }>Confirm</Text>
         </Pressable>
       </View>

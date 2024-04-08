@@ -6,6 +6,7 @@ import fonts from '../utils/globals/fonts'
 import { useRegisterMutation } from '../app/services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
+import { registerSchema } from '../utils/validations/authSchema'
 
 
 
@@ -15,11 +16,35 @@ const Register = ({ navigation }) => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ confirmPassword, setConfirmPassword ] = useState('')
+  const [ errorEmailMsg, setErrorEmailMsge ] = useState('')
+  const [ errorPasswordMsge, setErrorPasswordMsge ] = useState('')
+  const [ errorConfirmPasswordMsge, setErrorConfirmPasswordMsge ] = useState('')
   const [ triggerRegister ] = useRegisterMutation()
 
+
   const onSubmit = async () => {
-    const { data } = await triggerRegister( { email, password } )
-    dispatch( setUser( { email: data.email, idToken: data.idToken } ) )
+    try {
+      registerSchema.validateSync( { email, password, confirmPassword } )
+      const { data } = await triggerRegister( { email, password } )
+      dispatch( setUser( { email: data.email, idToken: data.idToken, localId: data.localId } ) )
+    } catch (error) {
+      setErrorEmailMsge( '' )
+      setErrorPasswordMsge( '' )
+      setErrorConfirmPasswordMsge( '' )
+      switch (error.path) {
+        case 'email':
+          setErrorEmailMsge( error.message )
+          break
+        case 'password':
+          setErrorPasswordMsge( error.message )
+          break
+        case 'confirmPassword':
+          setErrorConfirmPasswordMsge( error.message )
+          break
+        default:
+          console.log( error.message )
+      }
+    }
   }
 
   return (
@@ -30,7 +55,7 @@ const Register = ({ navigation }) => {
           value={ email } 
           placeholder="Email" 
           keyboardType={ 'email-address' }
-          error=""
+          error={ errorEmailMsg }
         />
         <AuthInput 
           action={ (t) => setPassword(t) } 
@@ -38,7 +63,7 @@ const Register = ({ navigation }) => {
           placeholder="Password" 
           keyboardType={ 'default' } 
           otherProps={ { secureTextEntry: true } }
-          error="" 
+          error={ errorPasswordMsge }
           />
         <AuthInput 
           action={ (t) => setConfirmPassword(t) } 
@@ -46,7 +71,7 @@ const Register = ({ navigation }) => {
           placeholder="Confirm Password" 
           keyboardType={ 'default' } 
           otherProps={ { secureTextEntry: true } } 
-          error=""
+          error={ errorConfirmPasswordMsge }
           />
         <ButtonPrimary title="Register" onPress={ onSubmit } />
         <View style={ styles.textContainer }>

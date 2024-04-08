@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 import ShopStack from './ShopStack'
 import CartStack from './CartStack'
 import OrderStack from './OrderStack'
+import ProfileStack from './ProfileStack'
 import TabBarIcon from '../components/TabBarIcon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -35,6 +36,13 @@ const TabNavigator = () => {
          component={ OrderStack }
          options={{
          tabBarIcon: ( { focused } ) => <TabBarIcon title="Order" iconName="list" focused={ focused }/>
+         }}
+      />
+      <Tab.Screen
+         name="ProfileStack"
+         component={ ProfileStack }
+         options={{
+         tabBarIcon: ( { focused } ) => <TabBarIcon title="Profile" iconName="user" focused={ focused }/>
          }}
       />
    </Tab.Navigator>

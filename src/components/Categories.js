@@ -10,6 +10,7 @@ const Categories = ({ navigation }) => {
       return <Text>Loading...</Text>
     }
 
+    console.log(categories);
 
   return (
    <FlatList

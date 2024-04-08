@@ -5,7 +5,7 @@ const OrderItem = ({order}) => {
   return (
     <View style={styles.card}>
       <View>
-        <Text style={ styles.text }>{new Date( order.createAt ).toLocaleDateString()}</Text>
+        <Text style={ styles.text }>{ order.createAt }</Text>
         <Text style={ styles.text }>${order.total}</Text>
       </View>
       <FontAwesome5 name="search" size={20} color="lightgray" style={ styles.icon } />
