@@ -16,14 +16,12 @@ const Search = ({ handleKeyword }) => {
          setError( true )
          return
       }
-      console.log("Bucando...");
       setError( false )
       handleKeyword(input)
       Keyboard.dismiss()
    }
    
    const handleClear = () => {
-      console.log("Limpiando...");
       setInput('')
       handleKeyword('')
       setError( false )

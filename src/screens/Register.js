@@ -7,6 +7,7 @@ import { useRegisterMutation } from '../app/services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
 import { registerSchema } from '../utils/validations/authSchema'
+import { deleteSession, insertSession } from '../utils/db'
 
 
 
@@ -26,6 +27,8 @@ const Register = ({ navigation }) => {
     try {
       registerSchema.validateSync( { email, password, confirmPassword } )
       const { data } = await triggerRegister( { email, password } )
+      deleteSession()
+      insertSession( data )
       dispatch( setUser( { email: data.email, idToken: data.idToken, localId: data.localId } ) )
     } catch (error) {
       setErrorEmailMsge( '' )
@@ -42,7 +45,7 @@ const Register = ({ navigation }) => {
           setErrorConfirmPasswordMsge( error.message )
           break
         default:
-          console.log( error.message )
+          break
       }
     }
   }
@@ -53,7 +56,7 @@ const Register = ({ navigation }) => {
         <AuthInput 
           action={ (t) => setEmail(t) } 
           value={ email } 
-          placeholder="Email" 
+          inputMode={ 'email' }
           keyboardType={ 'email-address' }
           error={ errorEmailMsg }
         />
@@ -61,7 +64,7 @@ const Register = ({ navigation }) => {
           action={ (t) => setPassword(t) } 
           value={ password } 
           placeholder="Password" 
-          keyboardType={ 'default' } 
+          inputMode={ 'none' } 
           otherProps={ { secureTextEntry: true } }
           error={ errorPasswordMsge }
           />
@@ -69,7 +72,7 @@ const Register = ({ navigation }) => {
           action={ (t) => setConfirmPassword(t) } 
           value={ confirmPassword } 
           placeholder="Confirm Password" 
-          keyboardType={ 'default' } 
+          inputMode={ 'none' } 
           otherProps={ { secureTextEntry: true } } 
           error={ errorConfirmPasswordMsge }
           />

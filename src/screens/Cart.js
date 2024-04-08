@@ -12,14 +12,12 @@ const Cart = ({ navigation }) => {
   const localId = useSelector( state => state.auth.localId )
   const [ triggerAddOrder ] = usePostOrderMutation()
 
-  console.log( 'localId', localId );
-
   const handlerAddOrder = async () => {
     const createdAt = new Date().toLocaleString()
     const order = { createdAt, ...cart }
     await triggerAddOrder(  {localId, order}  )
     dispatch( deleteCart() )
-    navigation.navigate( 'OrdersStack' )
+    navigation.navigate( 'OrderStack' )
   }
 
   return (

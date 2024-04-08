@@ -16,8 +16,7 @@ const CartDetails = ({ route }) => {
    useEffect(() => {
       findMovieById( movieId )
     }, [ movieId ])
-
-    console.log(selectedMovie);
+    
 
   return (
     <ScrollView>

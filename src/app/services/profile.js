@@ -4,6 +4,8 @@ export const profileApi = createApi({
    reducerPath: 'profileApi',
    baseQuery: fetchBaseQuery( { baseUrl: 'https://scaryapp-native-default-rtdb.firebaseio.com' } ),
 
+   tagTypes: ['userImage', 'userLocation'],
+
    endpoints: ( builder ) => ({
 
       putImage: builder.mutation({
@@ -11,11 +13,13 @@ export const profileApi = createApi({
             url: `/profile/${localId}.json`,
             method: 'PUT',
             body: { image }
-         })
+         }),
+         invalidatesTags: ['userImage']
       }),
 
       getImage: builder.query({
-         query: ( localId ) => `/profile/${localId}.json`
+         query: ( localId ) => `/profile/${localId}.json`,
+         providesTags: ['userImage']
       }),
 
       putUserLocation: builder.mutation({
@@ -23,11 +27,13 @@ export const profileApi = createApi({
             url: `/userLocation/${localId}.json`,
             method: 'PUT',
             body: { locationFormatted }
-         })
+         }),
+         invalidatesTags: ['userLocation']
       }),
 
       getUserLocation: builder.query({
-         query: ( localId ) => `/userLocation/${localId}.json`
+         query: ( localId ) => `/userLocation/${localId}.json`,
+         providesTags: ['userLocation']
       })
    })
 

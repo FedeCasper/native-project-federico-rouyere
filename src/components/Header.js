@@ -1,9 +1,20 @@
 import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import fonts from '../utils/globals/fonts'
+import { deleteSession } from '../utils/db'
+import { clearUser } from '../features/auth/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const Header = ({ title, navigation }) => {
+
+  const dispatch = useDispatch()
+  const idToken = useSelector( state => state.auth.idToken )
+
+  const onLogout = () => {
+    dispatch( clearUser() )
+    deleteSession()
+  }
 
   return (
     <View style={styles.container}>
@@ -17,6 +28,11 @@ const Header = ({ title, navigation }) => {
             null
         }
         <Text style={[styles.text , { marginRight: title === 'ScaryApp' ? 0 : "auto" } ]}>{title}</Text>
+        { idToken && (
+          <Pressable onPress={ onLogout } style={{ position: title === 'ScaryApp' ? 'absolute' : 'relative', right: title === 'ScaryApp' ? 20 : "" }}>
+            <FontAwesome name="sign-out" size={24} color="lightgray"  />
+          </Pressable>
+        )}
     </View>
   )
 }

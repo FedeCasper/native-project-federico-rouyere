@@ -1,14 +1,14 @@
 import { StyleSheet, TextInput, Text, View } from 'react-native'
 import fonts from '../utils/globals/fonts'
 
-const AuthInput = ({ action, value, placeholder, keyboardType, otherProps, error }) => {
+const AuthInput = ({ action, value, placeholder, inputMode, otherProps, error }) => {
   return (
    <View style={styles.container}>
       <TextInput 
          onChangeText={ action } 
          value={ value } 
          placeholder={ placeholder }
-         keyboardType={ keyboardType }
+         inputMode={ inputMode }
          autoCapitalize="none"
          placeholderTextColor={'gray'}
          {...otherProps}
